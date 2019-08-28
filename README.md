@@ -1,6 +1,6 @@
 #Pyblur
 
-## Updated PyBlur to work with Python 3, migrated to OpenCV and added multichannel image support.
+##Updated PyBlur to work with Python 3, migrated to OpenCV and added multichannel image support.
 
 ##Python image blurring routines.
 Pyblur is a collection of simple image blurring routines.<br>
