@@ -3,25 +3,36 @@ import numpy as np
 from PIL import Image
 from scipy.signal import convolve2d
 from skimage.draw import circle
+import cv2
 
-defocusKernelDims = [3,5,7,9]
+# defocusKernelDims = [3,5,7,9]
+defocusKernelDims = [5,7,9,12,15]
 
 def DefocusBlur_random(img):
     kernelidx = np.random.randint(0, len(defocusKernelDims))    
     kerneldim = defocusKernelDims[kernelidx]
     return DefocusBlur(img, kerneldim)
 
+# def DefocusBlur(img, dim):
+#     imgarray = np.array(img, dtype="float32")
+#     kernel = DiskKernel(dim)
+#     convolved = convolve2d(imgarray, kernel, mode='same', fillvalue=255.0).astype("uint8")
+#     img = Image.fromarray(convolved)
+#     return img
+
 def DefocusBlur(img, dim):
-    imgarray = np.array(img, dtype="float32")
     kernel = DiskKernel(dim)
-    convolved = convolve2d(imgarray, kernel, mode='same', fillvalue=255.0).astype("uint8")
-    img = Image.fromarray(convolved)
-    return img
+    convolved = cv2.filter2D(img, -1, kernel)
+    return convolved
+
+    
+    
+
 
 
 def DiskKernel(dim):
     kernelwidth = dim
-    kernel = np.zeros((kernelwidth, kernelwidth), dtype=np.float32)
+    kernel = np.zeros((kernelwidth+1, kernelwidth+1), dtype=np.float32)
     circleCenterCoord = dim / 2
     circleRadius = circleCenterCoord +1
     
